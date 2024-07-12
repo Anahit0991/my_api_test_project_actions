@@ -1,0 +1,27 @@
+[
+  {
+    "name": "Passes Tests",
+    "matchedStatuses": ["passed"],
+    "severity": "Minor"
+  },
+   {
+    "name": "Skipped Tests",
+    "matchedStatuses": ["skipped"],
+     "severity": "Minor"
+  },
+   {
+    "name": "My Broken Tests",
+    "matchedStatuses": ["broken"],
+    "severity": "Major"
+  },
+  {
+    "name": "My Unknown Tests",
+    "matchedStatuses": ["unknown"],
+    "severity": "Normal"
+  },
+  {
+    "name": "Critical Tests",
+    "matchedStatuses": ["failed"],
+    "severity": "Critical"
+  }
+]
