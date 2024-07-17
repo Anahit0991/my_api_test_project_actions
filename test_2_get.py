@@ -3,13 +3,12 @@ import requests
 import allure
 import random
 
-
 base_url = "https://reqres.in/api"
+
 
 @allure.feature("TEST REQRES GET")
 @allure.suite("GET")
-class TestReqresGet():
-
+class TestReqresGet:
 
     @allure.story("Get Users")
     @allure.title("Get Users List")
@@ -27,13 +26,12 @@ class TestReqresGet():
         with allure.step("Check Users' quantity per page"):
             assert len(response.json()["data"]) == 6
 
-
     @allure.story("Get User Details")
     @allure.title("Get Single User")
     @allure.description("Verify that we can retrieve a single user by ID.")
     @allure.severity("Normal")
     @pytest.mark.smoke
-    def test_user_by_id(self):
+    def test_get_user_by_id(self):
         user_id = random.randint(1, 12)
         with allure.step(f"GET request to {base_url}/users/{user_id}"):
             response = requests.get(f"{base_url}/users/{user_id}")
@@ -41,7 +39,6 @@ class TestReqresGet():
             assert response.status_code == 200, f"Expected status code 200, but got {response.status_code}"
         with allure.step("Check User's Id"):
             assert response.json()["data"]["id"] == user_id
-
 
     @allure.story("Get User Details")
     @allure.title("Get Single User Not Found")
@@ -58,7 +55,6 @@ class TestReqresGet():
         with allure.step("Check No Data was Found"):
             assert len(response.json()) == 0
 
-
     @allure.story("Get Resource List")
     @allure.title("Get List Resource")
     @allure.description("Verify that we can retrieve a list of resources successfully.")
@@ -72,7 +68,6 @@ class TestReqresGet():
             assert response.status_code == 200, f"Expected status code 200, but got {response.status_code}"
         with allure.step("Check Users' quantity per page"):
             assert len(response.json()["data"]) == 6
-
 
     @allure.story("Get Resource Details")
     @allure.title("Get Single Resource")
@@ -88,7 +83,6 @@ class TestReqresGet():
             assert response.status_code == 200, f"Expected status code 200, but got {response.status_code}"
         with allure.step("Check Resource's Id"):
             assert response.json()["data"]["id"] == resource_id
-
 
     @allure.story("Get Resource Details")
     @allure.title("Get Single Resource Not Found")
@@ -108,8 +102,7 @@ class TestReqresGet():
 
 @allure.feature("TEST REQRES GET")
 @allure.suite("GET DELAYED RESPONSE")
-class TestReqresDelayedResponse():
-
+class TestReqresDelayedResponse:
 
     @allure.story("Delayed Response")
     @allure.title("Delayed Response")
@@ -123,4 +116,6 @@ class TestReqresDelayedResponse():
             response = requests.get(f"{base_url}/users?delay={time}")
         with allure.step("Check Status Code"):
             assert response.status_code == 200, f"Expected status code 200, but got {response.status_code}"
+
+
 

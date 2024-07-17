@@ -1,15 +1,14 @@
 import pytest
 import requests
 import allure
-import random
-
+from user_data import user_id
 
 base_url = "https://reqres.in/api"
 
+
 @allure.feature("TEST REQRES UPDATE")
 @allure.suite("UPDATE")
-class TestReqresUpdate():
-
+class TestReqresUpdate:
 
     @allure.story("User Update")
     @allure.title("Put Update User")
@@ -23,7 +22,6 @@ class TestReqresUpdate():
             "job": "zion resident"
         }
         headers = {'Content-Type': 'application/json'}
-        user_id = random.randint(1, 12)
         with allure.step(f"PUT request to {base_url}/users/{user_id}"):
             response = requests.put(
                 f"{base_url}/users/{user_id}",
@@ -37,7 +35,6 @@ class TestReqresUpdate():
         with allure.step("Check User's Job"):
             assert response.json()["job"] == data["job"]
 
-
     @allure.story("User Update")
     @allure.title("Patch Update User")
     @allure.description("Verify that we can partially update a user's details successfully using PATCH.")
@@ -50,7 +47,6 @@ class TestReqresUpdate():
             "job": "zion resident"
         }
         headers = {'Content-Type': 'application/json'}
-        user_id = random.randint(1, 12)
         with allure.step(f"PATCH request to {base_url}/users/{user_id}"):
             response = requests.patch(
                 f"{base_url}/users/{user_id}",

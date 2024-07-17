@@ -1,14 +1,14 @@
 import pytest
 import requests
 import allure
-
+import user_data
 
 base_url = "https://reqres.in/api"
 
+
 @allure.feature("TEST REQRES POST")
 @allure.suite("CREATE")
-class TestReqresPost():
-
+class TestReqresPost:
 
     @allure.story("User Creation")
     @allure.title("Create a User")
@@ -32,12 +32,12 @@ class TestReqresPost():
         with allure.step("Check User's Name"):
             assert response.json()["name"] == data["name"]
 
+        user_data.user_id = response.json()["id"]
 
 
 @allure.feature("TEST REQRES POST")
 @allure.suite("AUTHORIZATION")
-class TestReqresAuthorization():
-
+class TestReqresAuthorization:
 
     @allure.story("User Registration")
     @allure.title("Register Successful")
@@ -61,6 +61,8 @@ class TestReqresAuthorization():
         with allure.step("Check Token"):
             assert "token" in response.json(), "Token hasn't been generated"
 
+        user_data.token = response.json()["token"]
+
     @allure.story("User Registration")
     @allure.title("Register Unsuccessful")
     @allure.description("Verify that registering without a password returns an error.")
@@ -82,7 +84,6 @@ class TestReqresAuthorization():
         with allure.step("Check Error Message"):
             assert "error" in response.json(), "Account registered without password"
 
-
     @allure.story("User Login")
     @allure.title("Login Successful")
     @allure.description("Verify that we can log in a user successfully.")
@@ -91,7 +92,8 @@ class TestReqresAuthorization():
     def test_login(self):
         data = {
             "email": "eve.holt@reqres.in",
-            "password": "cityslicka"
+            "password": "cityslicka",
+            "token": user_data.token
         }
         headers = {'Content-Type': 'application/json'}
         with allure.step(f"POST request to {base_url}/login"):
@@ -103,7 +105,6 @@ class TestReqresAuthorization():
             assert response.status_code == 200, f"Expected status code 200, but got {response.status_code}"
         with allure.step("Check Token"):
             assert "token" in response.json(), "Token hasn't been generated"
-
 
     @allure.story("User Login")
     @allure.title("Login Unsuccessful")

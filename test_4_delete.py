@@ -1,15 +1,14 @@
 import pytest
 import requests
 import allure
-import random
-
+from user_data import user_id
 
 base_url = "https://reqres.in/api"
 
+
 @allure.feature("TEST REQRES DELETE")
 @allure.suite("DELETE")
-class TestReqresDelete():
-
+class TestReqresDelete:
 
     @allure.story("User Deletion")
     @allure.title("Delete User")
@@ -17,7 +16,6 @@ class TestReqresDelete():
     @allure.severity("Normal")
     @pytest.mark.smoke
     def test_delete_user_by_id(self):
-        user_id = random.randint(1, 12)
         with allure.step(f"DELETE request to {base_url}/users/{user_id}"):
             response = requests.delete(f"{base_url}/users/{user_id}")
         with allure.step("Check Status Code"):
